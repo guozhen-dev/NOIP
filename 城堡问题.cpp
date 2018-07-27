@@ -48,38 +48,24 @@ bool if_avai (int x , char dir){
 void dfs(int x , int y){
 	// cout << "------"<<x<<" "<<y<<"--------"<<endl ;
 	// testoutput() ;
-	// cout <<if_avai(mapp[x][y],'E');
+	
 	if (visited[x][y]!=0) return ;
 	else visited[x][y] = flag;
 	if (x>0 and if_avai(mapp[x][y],'N')){
-		
-		// visited[x-1][y] = flag ;
 		dfs(x-1,y);
 	}
 	if (x < n-1 and if_avai(mapp[x][y],'S')){
-		// visited[x+1][y] = flag ;
-		// visited[x][y] = flag;
-		// cout << 'S';
 		dfs(x+1,y);
 	}
 	if (y>0 and if_avai(mapp[x][y],'W')){
-		// visited[x][y-1] = flag ;
-		// cout << mapp[1][1]<<endl;
-		// visited[x][y] = flag;
-		// cout <<"wWWWwww"<<x<<" "<<y<<endl;
 		dfs(x,y-1);
 	}
 	if (y<m-1 and if_avai(mapp[x][y],'E')){
-		// visited[x][y] = flag;
-		// visited[x][y+1]=flag  ;
-		// cout <<'E';
 		dfs(x,y+1);
 	}else {return ;}
 }
 
 int main () {
-	// cout << (11>>2);
-	// exit(0);
 	// freopen("1.cpp","r",stdin);
 	readin_and_init() ;
 	for (int i = 0 ; i < n ; i ++){
