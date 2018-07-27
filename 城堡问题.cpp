@@ -1,121 +1,104 @@
 #include <bits/stdc++.h>
 using namespace std ;
-int mapp[107][107];
-int size;
-int empty ;
-int black;
-int white;
-
-void readin() {
-	cin >> size;
-	for ( int i = 0 ; i < size ; i++){
-		for (int j = 0 ; j < size ; j++){
-			char t ;
-			cin >> t ;
-			if (t == '.'){
-				mapp[i][j]=0;
-				empty++ ;
-			} else if (t == 'B'){
-				mapp[i][j] = 1;
-			}else if (t == 'W'){
-				mapp[i][j] = 2 ;
-			}else {
-				cout << "readin error"<<endl;
-				exit (255);
-			}
+int n,m  ;
+int mapp[57][57];
+int visited[57][57];
+int flag ;
+int total;
+int maxaaa;
+int data[57*57];
+void testoutput(){
+	for(int i = 0 ; i < n ; i++){
+		for ( int j = 0 ; j < m ; j++){
+			cout << visited[i][j]<<" ";
 		}
+		cout << endl ;
 	}
-	return  ;
 }
-
-void init () {
-	empty = black = white = 0 ;
-	return ;
-}
-void testout () {
-	for ( int i =0 ; i < size ; i++)
-		{for ( int j =0 ; j < size ; j++){
-					cout << mapp[i][j]<<" ";
-				}
-				cout << endl;}
-}
-void dfs(int i , int j ){
-	if (mapp[i][j] == 0 ){
-		return ;
-	}else if (mapp[i][j] == 1){
-		if(i >= 1 and mapp[i-1][j]==0){
-			mapp[i-1][j]=1;
-			empty--;
-			dfs(i-1,j);
-		}
-		if(i < size-1 and mapp[i+1][j]==0){
-			mapp[i+1][j] = 1 ;
-			empty -- ;
-			dfs(i+1,j);
-		}
-		if ( j >=1 and mapp[i][j-1] == 0 ){
-			mapp[i][j-1] = 1 ;
-			empty -- ;
-			dfs(i,j-1);
-		}
-		if(j < size-1 and mapp[i][j+1]==0){
-			mapp[i][j+1] = 1 ;
-			empty -- ;
-			dfs(i,j+1);
-		}
-	}else if (mapp[i][j] == 2){
-		if(i >= 1 and mapp[i-1][j]==0){
-			mapp[i-1][j]=2;
-			empty--;
-			dfs(i-1,j);
-		}
-		if(i < size-1 and mapp[i+1][j]==0){
-			mapp[i+1][j] = 2 ;
-			empty -- ;
-			dfs(i+1,j);
-		}
-		if ( j >=1 and mapp[i][j-1] == 0 ){
-			mapp[i][j-1] = 2 ;
-			empty -- ;
-			dfs(i,j-1);
-		}
-		if(j < size-1 and mapp[i][j+1]==0){
-			mapp[i][j+1] = 2 ;
-			empty -- ;
-			dfs(i,j+1);
+void readin_and_init() {
+	cin >> n >> m;
+	flag = 1;
+	for ( int i = 0 ; i < n ; i++){
+		for ( int j =0 ; j < m ; j++){
+			cin >> mapp[i][j];
+			visited[i][j]=0;
 		}
 	}
 
 }
-int main (){
-	freopen ("1.cpp","r",stdin);
-	init() ;
-	readin();
-	for ( int i = 0 ; i < size ; i++){
-		for (int j = 0; j < size; j++)
-		{
+bool if_avai (int x , char dir){
+	// cout << "***"<<x <<" "<<dir <<"***" <<endl ;
+	if (dir == 'W'){
+		if(x%2) {return 0;}
+		else {return 1 ;}
+	}else if ( dir == 'E'){
+		if ((x>>2)%2) {return 0 ;}
+		else {return 1 ;}
+	}else if ( dir == 'S'){
+		if ((x>>3)%2) {return 0;}
+		else {return 1 ;}
+	}else if ( dir == 'N'){
+		if ((x>>1)%2) {return 0 ;}
+		else {return 1 ;}
+	}else {
+		cout << "if_avai_err "<<endl ;
+		exit(255);
+	}
+}
+void dfs(int x , int y){
+	// cout << "------"<<x<<" "<<y<<"--------"<<endl ;
+	// testoutput() ;
+	// cout <<if_avai(mapp[x][y],'E');
+	if (visited[x][y]!=0) return ;
+	else visited[x][y] = flag;
+	if (x>0 and if_avai(mapp[x][y],'N')){
+		
+		// visited[x-1][y] = flag ;
+		dfs(x-1,y);
+	}
+	if (x < n-1 and if_avai(mapp[x][y],'S')){
+		// visited[x+1][y] = flag ;
+		// visited[x][y] = flag;
+		// cout << 'S';
+		dfs(x+1,y);
+	}
+	if (y>0 and if_avai(mapp[x][y],'W')){
+		// visited[x][y-1] = flag ;
+		// cout << mapp[1][1]<<endl;
+		// visited[x][y] = flag;
+		// cout <<"wWWWwww"<<x<<" "<<y<<endl;
+		dfs(x,y-1);
+	}
+	if (y<m-1 and if_avai(mapp[x][y],'E')){
+		// visited[x][y] = flag;
+		// visited[x][y+1]=flag  ;
+		// cout <<'E';
+		dfs(x,y+1);
+	}else {return ;}
+}
+
+int main () {
+	// cout << (11>>2);
+	// exit(0);
+	// freopen("1.cpp","r",stdin);
+	readin_and_init() ;
+	for (int i = 0 ; i < n ; i ++){
+		for (int j = 0 ; j < m ; j ++){
+			flag++;
 			dfs(i,j);
 		}
 	}
-	// cout << empty <<endl;
-	for  ( int i = 0 ; i < size ; i++){
-		for ( int j = 0 ; j < size ; j++){
-			if (mapp[i][j]==1){
-				black ++;
-			}else if ( mapp[i][j]==2){
-				white ++;
-			}else {
-				cout << "total error"<<endl;
-				exit(255);
-			}
+	// testoutput();
+	for (int i = 0 ; i < n ; i ++){
+		for (int j = 0 ; j < m ; j++){
+			data[visited[i][j]]++;
 		}
 	}
-	// testout();
-	cout<<black<<" "<<white<<endl;
+	for ( int i = 0 ; i < 57*57 ; i++){
+		if (data[i]!= 0) total ++;
+		maxaaa = max(maxaaa,data[i]);
 
-
-
-
+	}
+	cout << total <<endl<<maxaaa<<endl ;
 	return 0 ;
-
- }
+}
