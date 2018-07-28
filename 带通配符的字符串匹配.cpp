@@ -37,8 +37,8 @@ int main()
     m = strlen(s);
     n = strlen(t);
     if (match(0, 0))
-        puts("matched");
+        cout << "matched";
     else
-        puts("not matched");
+        cout << "not matched" ;
     return 0;
 }
