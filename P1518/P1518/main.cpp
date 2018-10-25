@@ -9,13 +9,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 char input[12][12];
+int test ;
 char dirf,dirc;
 struct node{
     int x ; int y ;
 };
 struct node F,C,Fori,Cori;
 
-void readln(){
+inline void readln(){
     for (int i = 1 ; i < 11 ; i++){
         for ( int j = 1 ; j < 11 ; j++){
             cin >> input[i][j];
@@ -35,7 +36,7 @@ void readln(){
         }
     }
 }
-void setsides(){
+inline void setsides(){
     for (int i = 0 ; i < 12 ;i++){
         input[0][i]='*';
         input[i][0]='*';
@@ -44,9 +45,9 @@ void setsides(){
     }
 }
 
-void checkmap(){
-    for (int i = 0 ; i < 12 ; i ++){
-        for (int j = 0 ; j < 12 ; j++){
+inline void checkmap(){
+    for (register int i = 0 ; i < 12 ; i ++){
+        for (register int j = 0 ; j < 12 ; j++){
             if (F.x==i and F.y ==j )cout << "F ";
             else if (C.x==i and C.y ==j )cout << "C ";
             else cout << input[i][j]<<' ';
@@ -54,12 +55,12 @@ void checkmap(){
         cout << endl;
     }
 }
-int check(){
+inline int check(){
     if (F.x==C.x and F.y==C.y) return 1;
-    else if (F.x==Fori.x and F.y==Fori.y and C.y==Cori.y and C.x==Cori.x) return 2;
+    else if (F.x==Fori.x and F.y==Fori.y and C.y==Cori.y and C.x==Cori.x and dirf=='N' and dirc =='N') return 2;
     return 0;
 }
-void turning(char a){
+inline void turning(char a){
     switch (a) {
         case 'F':
             if(dirf=='N') dirf='E';
@@ -76,7 +77,7 @@ void turning(char a){
             break;
     }
 }
-void walking(){
+inline void walking(){
     switch (dirf) {
         case 'W':
             if(input[F.x][F.y-1]=='*') turning('F');
@@ -120,18 +121,19 @@ void walking(){
 }
 
 int main(int argc, const char * argv[]) {
+    test = 0 ;
     readln();
     setsides();
     Fori=F;
     Cori=C;
 //    checkmap();
-    int cnt= 0 ;
+    register int cnt= 0 ;
     dirf='N';
     dirc='N';
     while(true){
 //        checkmap();
 //        cout << endl;
-        if (cnt > 1e8) {
+        if (cnt > 9*1e7) { // cnt max = 2*1e5 is enough 
             cout << 0;
             exit(0);
         }
