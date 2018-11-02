@@ -33,7 +33,7 @@ int main () {
    write_in(input[i]);
   }
   else if ( input[i] == '-' ) {
-   if(input[i-1]>=input[i+1] || is_al(input[i-1])^is_al(input[i+1])){
+   if(input[i-1]>=input[i+1] ||( is_al(input[i-1])^is_al(input[i+1]) || is_num(input[i-1])^is_num(input[i+1]))){
     write_in('-');
    }
    else if (is_al(input[i-1]) and is_al(input[i+1]) and input[i-1]+1==input[i+1]){
@@ -43,7 +43,7 @@ int main () {
    else if (input[i-1]<input[i+1] and p3 == 1){
     for (register char j = input[i-1]+1 ; j < input[i+1] ; j++){
       char ans = j ;
-      if ( p1 == 2 ){  
+      if ( p1 == 2 && ans>='a' && ans<='z'){  
         ans+='A'-'a';
       }
       if( p1 == 3){
@@ -58,7 +58,7 @@ int main () {
    else if (input[i-1]<input[i+1] and p3 == 2){
     for(register char j = input[i+1]-1 ; j > input[i-1] ; j--){
      char ans = j ;
-     if ( p1 == 2 ){          
+     if ( p1 == 2&&ans>='a'&& ans<='z' ){          
         ans+='A'-'a';
      }
      if( p1 == 3){
