@@ -33,7 +33,6 @@ inline void check(int curx, int cury ){
 
 
 int main(int argc, const char * argv[]) {
-
     cin >> x >> y ;
     memset(ans,0x7f,sizeof(ans));
     for (int i =0 ; i < x ; i++){
